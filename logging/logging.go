@@ -50,6 +50,8 @@ type Logger interface {
 	Notice(args ...interface{})
 	Info(args ...interface{})
 	Debug(args ...interface{})
+
+    Name() string
 }
 
 func NewSimpleLogger(name string) Logger {
@@ -65,6 +67,7 @@ func NewLogger(name string, logLevel LogLevel, panicOnEmergency bool, emergency 
 	info io.Writer, debug io.Writer) *BasicLogger {
 
 	logger := BasicLogger{}
+    logger.name = name
 	logger.logLevel = logLevel
 	logger.panicOnEmergency = panicOnEmergency
 	logger.alert = log.New(alert,

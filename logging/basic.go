@@ -16,6 +16,7 @@ type BasicLogger struct {
 	debug            *log.Logger
 	logLevel         LogLevel
 	panicOnEmergency bool
+    name             string
 }
 
 func (l *BasicLogger) Info(args ...interface{}) {
@@ -188,4 +189,8 @@ func (l *BasicLogger) CriticalError(message string, err error) {
 	if CRITICAL <= l.logLevel {
 		l.critical.Output(2, fmt.Sprintf(" GOT ERROR %s %v", message, err))
 	}
+}
+
+func (l *BasicLogger) Name() string {
+    return l.name
 }
