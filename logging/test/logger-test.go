@@ -20,6 +20,7 @@ type TestLogger struct {
 	info      *log.Logger
 	debug     *log.Logger
 	logLevel  lg.LogLevel
+    name      string
 	t         *testing.T
 }
 
@@ -200,6 +201,11 @@ func (l *TestLogger) CriticalError(message string, err error) {
 	l.t.Fatalf(" GOT lg.ERROR %s %v", message, err)
 }
 
+func (l *TestLogger) Name() string {
+    return l.name
+}
+
+
 func NewTestSimpleLogger(name string, t *testing.T) lg.Logger {
 	return NewTestLogger(name, t, lg.INFO, os.Stderr, os.Stderr, os.Stderr, os.Stderr, os.Stderr, os.Stdout, os.Stdout, ioutil.Discard)
 }
@@ -213,6 +219,7 @@ func NewTestLogger(name string, t *testing.T, logLevel lg.LogLevel, emergency io
 	info io.Writer, debug io.Writer) *TestLogger {
 
 	logger := TestLogger{}
+    logger.name = name
 	logger.logLevel = logLevel
 	logger.t = t
 	logger.alert = log.New(alert,
